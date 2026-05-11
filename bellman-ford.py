@@ -56,6 +56,9 @@ def bellmanford(M, d):
         print("Cycle de poids négatif : pas de plus court chemin")
     else:
         # Affichage :
+        # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
+        dictionnaire_des_chemins = {i: None for i in range(n)}
+    
         # Pour chaque sommet du graphe :
         for k, v in poids.items():
                 
@@ -76,14 +79,22 @@ def bellmanford(M, d):
                 while actuel != d:
                     chemin += str(precedents[actuel])
                     actuel = precedents[actuel]
-                        
+                      
+                # On inverse le chemin pour avoir le sommet de départ en premier (d'où la syntaxe [::-1])
+                chemin = chemin[::-1]
+              
                 """
                 On affiche le résultat :
                 - le poids du chemin au sommet k correspond à la valeur dans le dictionnaire "poids" pour la clé k
-                - le chemin est celui créé plus haut, mais on l'inverse pour avoir le sommet de départ en premier (d'où la syntaxe [::-1])
+                - le chemin est celui créé plus haut
                 """
-                print(f"Poids du chemin à {k} : {v} | chemin : {chemin[::-1]}") 
-        
+                print(f"Poids du chemin à {k} : {v} | chemin : {chemin}")
+                
+                # On réécrit le chemin sous la forme d'une liste d'entiers car c'est plus simple avec Graphviz
+                dictionnaire_des_chemins[k] = [int(i) for i in list(chemin)]
+    
+    # On renvoit le dictionnaire
+    return dictionnaire_des_chemins
         
 i = float('inf')
 M = np.array([

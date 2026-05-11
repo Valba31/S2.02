@@ -95,8 +95,10 @@ def dijkstra(M, d):
             """
             print(f"Poids du chemin à {k} : {v} | chemin : {chemin}")
             
+            # On réécrit le chemin sous la forme d'une liste d'entiers car c'est plus simple avec Graphviz
             dictionnaire_des_chemins[k] = [int(i) for i in list(chemin)]
 
+    # On renvoit le dictionnaire
     return dictionnaire_des_chemins
 
 i = float('inf')
