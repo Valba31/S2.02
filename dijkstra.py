@@ -61,6 +61,8 @@ def dijkstra(M, d):
                 precedents[j] = cle 
                 
     # Affichage :
+    liste_des_chemins = []
+    
     # Pour chaque sommet du graphe :
     for k, v in poids.items():
             
@@ -71,7 +73,7 @@ def dijkstra(M, d):
         if precedents[k] == None: print(f"sommet {k} non joignable à {d} par un chemin dans le graphe G") 
             
         # Sinon
-        else: 
+        else:            
             # On crée le chemin : au début seul le sommet d'arrivée est dedans : 
             chemin = "" + str(k)
                 
@@ -81,13 +83,20 @@ def dijkstra(M, d):
             while actuel != d:
                 chemin += str(precedents[actuel])
                 actuel = precedents[actuel]
+                
+            # On inverse le chemin pour avoir le sommet de départ en premier (d'où la syntaxe [::-1])
+            chemin = chemin[::-1]
                     
             """
             On affiche le résultat :
             - le poids du chemin au sommet k correspond à la valeur dans le dictionnaire "poids" pour la clé k
-            - le chemin est celui créé plus haut, mais on l'inverse pour avoir le sommet de départ en premier (d'où la syntaxe [::-1])
+            - le chemin est celui créé plus haut
             """
-            print(f"Poids du chemin à {k} : {v} | chemin : {chemin[::-1]}") 
+            print(f"Poids du chemin à {k} : {v} | chemin : {chemin}")
+            
+            liste_des_chemins.append(list(chemin))
+
+    return liste_des_chemins
                 
 
 
