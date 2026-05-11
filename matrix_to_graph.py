@@ -19,6 +19,8 @@ def matrix_to_graph(M,c) :
     dot = gv.Digraph(strict = True)
     #On initialise un dot2 qui resterra vide afin de ne rien renvoyer en cas de problème
     dot2 = gv.Digraph(strict = True)
+    #On initialise une liste d'arête parcourue pour ne pas ajouter deux fois dans dot
+    c_parcourus = set()
     
     #On définit que les sommets mit dans le dot devront être en rouge
     dot.attr('node', color = 'red', fontcolor = 'red')
@@ -30,11 +32,15 @@ def matrix_to_graph(M,c) :
         #On vérifie que l'arête allant de c[i] à c[i+1] n'est pas infinie afin de s'assurer quel le chemin existe
         if M[c[i]][c[i+1]] != float('inf') :
             #Si l'arête existe, on ajoute la flêche correspondant dans le dot en rouge
-            dot.edge(str(c[i]), str(c[i+1]), color = 'red', fontcolor = 'red')
+            dot.edge(str(c[i]), str(c[i+1]), label = str(M[c[i]][c[i+1]]), color = 'red', fontcolor = 'red')
+            c_parcourus.add((c[i],c[i+1]))
         else :
             #Si l'arête n'existe pas, on renvoie un fichier vide et on indique que le chemin n'existe pas
             print("Chemin impossible")
             return dot2
+    
+    #On ajoute le dernier sommet à la liste des sommets visités par le chemin
+    dot.node(str(c[-1]))
     
     #On remet les paramêtres des noeuds afin qu'ils soient en noirs
     dot.attr('node', color = 'black', fontcolor = 'black')
@@ -44,8 +50,10 @@ def matrix_to_graph(M,c) :
         for j in range (len(M)) :
             #On vérifie si une valeur correspondant à un indice est différente de l'infini
             if M[i][j] != float('inf') :
-                #Si c'est le cas, on ajoute la fleche correspondant en avec le poids
-                dot.edge(str(i),str(j), label = str(M[i][j]))
+                #On vérifier que l'arête ne soit pas déjà dans le dot
+                if (i,j) not in c_parcourus :
+                    #Si c'est le cas, on ajoute la fleche correspondant en avec le poids
+                    dot.edge(str(i),str(j), label = str(M[i][j]))
 
     #On renvoie le fichier dot
     return dot
