@@ -61,7 +61,7 @@ def dijkstra(M, d):
                 precedents[j] = cle 
                 
     # Affichage :
-    # # Pour chaque sommet du graphe :
+    # Pour chaque sommet du graphe :
     for k, v in poids.items():
             
         # Si le sommet est celui de départ, on passe au prochain sommet
