@@ -61,7 +61,8 @@ def dijkstra(M, d):
                 precedents[j] = cle 
                 
     # Affichage :
-    liste_des_chemins = []
+    # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
+    dictionnaire_des_chemins = {i: None for i in range(n)}
     
     # Pour chaque sommet du graphe :
     for k, v in poids.items():
@@ -94,11 +95,9 @@ def dijkstra(M, d):
             """
             print(f"Poids du chemin à {k} : {v} | chemin : {chemin}")
             
-            liste_des_chemins.append(list(chemin))
+            dictionnaire_des_chemins[k] = [int(i) for i in list(chemin)]
 
-    return liste_des_chemins
-                
-
+    return dictionnaire_des_chemins
 
 i = float('inf')
 M = np.array([ [i, 3, i, i, i], [i, i, 2, 4, i], [i, i, i, 7, i], [i, 1, 5, i, i], [i, i, i, i, i] ])
