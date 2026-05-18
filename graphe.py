@@ -25,5 +25,3 @@ def graphe2(n, p, a, b):
                 T[i][j] = float('inf')
     
     return T
-
-print(graphe(10, 0, 10))

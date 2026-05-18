@@ -1,6 +1,7 @@
 import numpy as np
 
 def bellmanford(M, d):
+    # INITIALISATION
     # n correspond au nombre de sommets du graphe (car la matrice est carrée n * n)
     n = len(M)
 
@@ -23,6 +24,7 @@ def bellmanford(M, d):
     # On initialise un index : si celui si dépasse le nombre de sommet on saura qu'il y a un cycle négatif
     i = 0
     
+    # ALGO
     # Tant que l'index est inférieur au nombre de sommets et que les poids actuels sont différents de ceux au tour précédent :
     while (i < n) and (poids != ancienPoids):
         
@@ -55,7 +57,7 @@ def bellmanford(M, d):
     if (i == n):
         print("Cycle de poids négatif : pas de plus court chemin")
     else:
-        # Affichage :
+        # AFFICHAGE
         # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
         dictionnaire_des_chemins = {i: None for i in range(n)}
     
@@ -95,15 +97,3 @@ def bellmanford(M, d):
     
     # On renvoit le dictionnaire
     return dictionnaire_des_chemins
-        
-i = float('inf')
-M = np.array([
-    [i, -1, i, i, 1, i],
-    [2, i, i, i, i, i],
-    [i, 3, i, i, i, i],
-    [i, i, -4, i, i, 6],
-    [i, i, i, 7, i, -2],
-    [i, i, i, 5, i, i]
-])
-
-bellmanford(M, 0)

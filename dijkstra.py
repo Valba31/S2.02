@@ -1,6 +1,7 @@
 import numpy as np 
 
 def dijkstra(M, d):
+    # INITIALISATION
     # n correspond au nombre de sommets du graphe (car la matrice est carrée n * n)
     n = len(M) 
     
@@ -17,6 +18,7 @@ def dijkstra(M, d):
     # Liste des sommets déjà visités
     visites = []
     
+    # ALGO
     # Il y a au maximum n sommets à traiter
     for _ in range(n):
         
@@ -60,7 +62,7 @@ def dijkstra(M, d):
                 # On mémorise le sommet précédent dans le plus court chemin 
                 precedents[j] = cle 
                 
-    # Affichage :
+    # AFFICHAGE
     # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
     dictionnaire_des_chemins = {i: None for i in range(n)}
     
@@ -100,7 +102,3 @@ def dijkstra(M, d):
 
     # On renvoit le dictionnaire
     return dictionnaire_des_chemins
-
-i = float('inf')
-M = np.array([ [i, 3, i, i, i], [i, i, 2, 4, i], [i, i, i, 7, i], [i, 1, 5, i, i], [i, i, i, i, i] ])
-dijkstra(M, 0)
