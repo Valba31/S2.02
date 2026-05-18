@@ -104,7 +104,7 @@ def dijkstra(M, d):
     # On renvoit le dictionnaire
     return dictionnaire_des_chemins
 
-def bellman_ford(M, d):
+def bellman_ford(M, d, algo):
     # INITIALISATION
     # n correspond au nombre de sommets du graphe (car la matrice est carrée n * n)
     n = len(M)
