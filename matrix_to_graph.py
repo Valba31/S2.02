@@ -3,7 +3,7 @@ import numpy as np
 
 import algo as al
 import graphes as g
-
+    
 # Création d'une variable pour représenter l'infini
 INF = float('inf')
 
