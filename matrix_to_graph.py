@@ -17,7 +17,7 @@ i = float('inf')
 #     [i, i, i, i, i],
 #     [1, -1, 1, i, 1]])
 
-M = g.graphe2(5, 0.8, -5, 5)
+M = g.graphe2(10, 0.2, -1, 10)
 
 def matrix_to_graph(M,d,s) :
     #On initialise la création d'un dot qui permettra de stocker les informations de notre graphe
@@ -84,7 +84,7 @@ def matrix_to_graph(M,d,s) :
     
 
 #Création d'une variable dot qui transforme ma matrice en graphe en prenant en compte le chemin donné
-dot = matrix_to_graph(M,0,3)
+dot = matrix_to_graph(M,0,8)
 
 #Affichage du graphe
 dot.render('output/graphviz_output.gv')
