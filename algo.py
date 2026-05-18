@@ -117,7 +117,7 @@ def bellman_ford(M, d):
     precedents = {i: None for i in range(n)}
 
     # Liste des arêtes
-    F = ps.pp(M, d)
+    F = obtenir_liste(M, ps.pp(M, d))
 
     # ALGO
     # On répète au maximum n-1 fois : c'est le nombre de sommets du graphe moins 1, car un chemin simple ne peut pas faire plus de n-1 arêtes
@@ -151,17 +151,17 @@ def bellman_ford(M, d):
         if not modification:
             break
 
-    # -------------------------
-    # CYCLE NÉGATIF
-    # -------------------------
+    # # -------------------------
+    # # CYCLE NÉGATIF
+    # # -------------------------
 
-    for p1, p2 in F:
+    # for p1, p2 in F:
 
-        if poids[p1] != float('inf'):
+    #     if poids[p1] != float('inf'):
 
-            if poids[p1] + M[p1, p2] < poids[p2]:
-                print("Cycle de poids négatif détecté")
-                return None
+    #         if poids[p1] + M[p1, p2] < poids[p2]:
+    #             print("Cycle de poids négatif détecté")
+    #             return None
 
     # AFFICHAGE
     # On crée un dictionnaire qui associe à chaque sommet son chemin depuis le sommet de départ, pour pouvoir tracer les graphes avec Graphviz

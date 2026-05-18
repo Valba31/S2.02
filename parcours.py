@@ -11,7 +11,7 @@ def pl(M,s) :
         i = file[0]
         
         for j in range(n) :
-            if(M[file[0]][j] == 1 and couleur[j] == 'blanc') :
+            if(M[file[0]][j] != float('inf') and couleur[j] == 'blanc') :
                 file.append(j)
                 couleur[j] = 'vert'
                 resultat.append(j)
@@ -35,7 +35,7 @@ def pp(M,s) :
         succ_blanc = []
         
         for j in range(n):
-            if (M[i,j] == 1 and couleur[j] == 'blanc'):
+            if (M[i,j] != float('inf') and couleur[j] == 'blanc'):
                 succ_blanc.append(j)
                 
         if succ_blanc != [] :
