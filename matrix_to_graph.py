@@ -1,24 +1,33 @@
 import graphviz as gv
 import numpy as np
 
+import bellman_ford as bel
+import dijkstra as dij
+import graphe as g
+
 #Création d'une variable i pour simplifier l'écriture de l'inifinie dans la matrice
 i = float('inf')
 
 #Création d'un chemin arbitraire pour test
-c = [0,1,4,2]
 
 #Création d'une matrice abritraire pour test
-M = np.array([[i, 1, 1, 1, 1],
-     [i, i, i, 1, 1],
-     [1, i, 1, i, i],
-     [i, i, i, i, i],
-     [1, 1, 1, i, 1]])
 
-def matrix_to_graph(M,c) :
+#M = np.array([[i, 1, 1, 1, 1],
+#     [i, i, i, 1, 1],
+#     [1, i, 1, i, i],
+#     [i, i, i, i, i],
+#     [1, 1, 1, i, 1]])
+
+M = g.graphe2(10, 0.8, -5, 5)
+
+def matrix_to_graph(M,d,s) :
     #On initialise la création d'un dot qui permettra de stocker les informations de notre graphe
     dot = gv.Digraph(strict = True)
     #On initialise un dot2 qui resterra vide afin de ne rien renvoyer en cas de problème
     dot2 = gv.Digraph(strict = True)
+    
+    c = bel.bellmanford(M,d)[s]
+    
     #On initialise une liste d'arête parcourue pour ne pas ajouter deux fois dans dot
     c_parcourus = set()
     
@@ -60,7 +69,7 @@ def matrix_to_graph(M,c) :
     
 
 #Création d'une variable dot qui transforme ma matrice en graphe en prenant en compte le chemin donné
-dot = matrix_to_graph(M,c)
+dot = matrix_to_graph(M,0,3)
 
 #Affichage du graphe
 dot.render('output/graphviz_output.gv')
