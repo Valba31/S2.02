@@ -101,11 +101,18 @@ def bellman_ford(M, d):
     return dictionnaire_des_chemins
 
 def obtenir_liste(M, L):
+    # Liste finale des flèches : elle contiendra des tuples (x, y) pour chaque flèche qui part de x et qui va vers y
     liste = []
     
+    # Pour chaque sommet du parcours en largeur/profondeur :
     for x in L:
+        
+        # Pour chaque flèche qui part de ce sommet :
         for i in M[x]:
+            
+            # Si la flèche existe, on l'ajoute à la liste finale
             if i != float('inf'):
                 liste.append((x, i))
     
+    # On renvoit la liste finale
     return liste
