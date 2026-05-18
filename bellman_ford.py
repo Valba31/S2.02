@@ -105,7 +105,7 @@ def obtenir_liste(M, L):
     
     for x in L:
         for i in M[x]:
-            if i != 0:
+            if i != float('inf'):
                 liste.append((x, i))
     
     return liste
