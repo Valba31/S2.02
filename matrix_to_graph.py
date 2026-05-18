@@ -3,7 +3,7 @@ import numpy as np
 
 import bellman_ford as bel
 import dijkstra as dij
-import graphe as g
+import graphes as g
 
 #Création d'une variable i pour simplifier l'écriture de l'inifinie dans la matrice
 i = float('inf')

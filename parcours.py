@@ -1,12 +1,35 @@
-import numpy as np
+def pl(M,s) :
+    # INITIALISATION
+    n = len(M)
+    couleur = {i: 'blanc' for i in range(n)}
+    couleur[s] = 'vert'
+    file = [s]
+    resultat = [s]
+    
+    # PARCOURS
+    while file != [] :
+        i = file[0]
+        
+        for j in range(n) :
+            if(M[file[0]][j] == 1 and couleur[j] == 'blanc') :
+                file.append(j)
+                couleur[j] = 'vert'
+                resultat.append(j)
+                
+        file.pop(0) 
+        
+    # AFFICHAGE
+    return resultat
 
 def pp(M,s) :
+    # INITIALISATION
     n = len(M)
     couleur = {i: 'blanc' for i in range(n)}
     couleur[s] = 'vert'
     pile = [s]
     resultat = [s]
     
+    # PARCOURS
     while pile != []:
         i = pile[-1]
         succ_blanc = []
@@ -23,23 +46,5 @@ def pp(M,s) :
         else:
             pile.pop()
     
-    return(resultat)
-
-
-def pl(M,s) :
-    n = len(M)
-    couleur = {}
-    for i in range(n) :
-        couleur[i] = 'blanc'
-    couleur[s] = 'vert'
-    file = [s]
-    Resultat = [s]
-    while file != [] :
-        i = file[0]
-        for j in range(n) :
-            if(M[file[0]][j] == 1 and couleur[j] == 'blanc') :
-                file.append(j)
-                couleur[j] = 'vert'
-                Resultat.append(j)
-        file.pop(0) 
-    return(Resultat)
+    # AFFICHAGE
+    return resultat
