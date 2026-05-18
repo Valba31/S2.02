@@ -26,6 +26,11 @@ def matrix_to_graph(M,d,s) :
     #On initialise un dot2 qui resterra vide afin de ne rien renvoyer en cas de problème
     dot2 = gv.Digraph(strict = True)
     
+    algo = True
+    
+    for i in range (len(M[0])) :
+        for j in range (len(M[0])) :
+    
     c = bel.bellmanford(M,d)[s]
     
     #On initialise une liste d'arête parcourue pour ne pas ajouter deux fois dans dot
