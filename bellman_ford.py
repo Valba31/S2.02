@@ -112,7 +112,7 @@ def obtenir_liste(M, L):
             
             # Si la flèche existe, on l'ajoute à la liste finale
             if i != float('inf'):
-                liste.append((x, i))
+                liste.append((x, int(i)))
     
     # On renvoit la liste finale
     return liste

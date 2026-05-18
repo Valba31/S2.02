@@ -12,11 +12,11 @@ i = float('inf')
 
 #Création d'une matrice abritraire pour test
 
-#M = np.array([[i, 1, 1, 1, 1],
+# M = np.array([[i, 1, -1, 1, 1],
 #     [i, i, i, 1, 1],
 #     [1, i, 1, i, i],
 #     [i, i, i, i, i],
-#     [1, 1, 1, i, 1]])
+#     [1, -1, 1, i, 1]])
 
 M = g.graphe2(10, 0.8, -5, 5)
 
@@ -42,7 +42,7 @@ def matrix_to_graph(M,d,s) :
         c = dij.dijkstra(M,d)[s]
     #Sinon on utilise Bellman-Ford
     else :
-        c = bel.bellmanford(M,d)[s]
+        c = bel.bellman_ford(M,d)[s]
     
     #On initialise une liste d'arête parcourue pour ne pas ajouter deux fois dans dot
     c_parcourus = set()
