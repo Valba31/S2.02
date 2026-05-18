@@ -1,6 +1,8 @@
 import numpy as np
 
-def bellmanford(M, d):
+import parcours as ps
+
+def bellman_ford(M, d):
     # INITIALISATION
     # n correspond au nombre de sommets du graphe (car la matrice est carrée n * n)
     n = len(M)
@@ -19,7 +21,7 @@ def bellmanford(M, d):
     precedents = {i: None for i in range(n)}
 
     # Liste des flèches : (x, y) représente une flèche qui part de x et qui va vers y
-    F = [(0, 1), (1, 0), (0, 4), (4, 3), (4, 5), (5, 3), (3, 5), (3, 2), (2, 1)]
+    F = obtenir_liste(M, ps.pp(M, d))
 
     # On initialise un index : si celui si dépasse le nombre de sommet on saura qu'il y a un cycle négatif
     i = 0
@@ -97,3 +99,13 @@ def bellmanford(M, d):
     
     # On renvoit le dictionnaire
     return dictionnaire_des_chemins
+
+def obtenir_liste(M, L):
+    liste = []
+    
+    for x in L:
+        for i in M[x]:
+            if i != 0:
+                liste.append((x, i))
+    
+    return liste

@@ -43,14 +43,3 @@ def pl(M,s) :
                 Resultat.append(j)
         file.pop(0) 
     return(Resultat)
-
-
-M = np.array([
-    [0, 1, 1, 0],
-    [1, 0, 0, 1],
-    [0, 0, 0, 0],
-    [0, 1, 0, 0]
-])
-
-print(pp(M, 0))
-print(pl(M,0))
