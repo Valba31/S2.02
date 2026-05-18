@@ -26,12 +26,23 @@ def matrix_to_graph(M,d,s) :
     #On initialise un dot2 qui resterra vide afin de ne rien renvoyer en cas de problème
     dot2 = gv.Digraph(strict = True)
     
+    #On créer une variable qui nous permettra de choisir l'algorithme à utiliser
     algo = True
     
+    #On parcours l'ensemble de la matrice
     for i in range (len(M[0])) :
         for j in range (len(M[0])) :
+            #On cherche à savoir si certaines arêtes ont un poids négatif
+            if M[i][j] < 0 :
+                #Si c'est le cas algo passe en False
+                algo = False
     
-    c = bel.bellmanford(M,d)[s]
+    #Si algo est encore True on va utiliser dijkstra car il n'y a pas d'arête à poid négatif
+    if algo == True : 
+        c = dij.dijkstra(M,d)[s]
+    #Sinon on utilise Bellman-Ford
+    else :
+        c = bel.bellmanford(M,d)[s]
     
     #On initialise une liste d'arête parcourue pour ne pas ajouter deux fois dans dot
     c_parcourus = set()
