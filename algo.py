@@ -124,7 +124,6 @@ def bellman_ford(M, d):
 
     # Liste des flèches : (x, y) représente une flèche qui part de x et qui va vers y
     F = obtenir_liste(M, ps.pp(M, d))
-    print(F)
 
     # On initialise un index : si celui si dépasse le nombre de sommet on saura qu'il y a un cycle négatif
     i = 0
@@ -210,8 +209,6 @@ def obtenir_liste(M, L):
     # Pour chaque sommet du parcours en largeur/profondeur :
     for x in L:
         
-        print(M[x])
-        
         # Pour chaque flèche qui part de ce sommet :
         for k, v in enumerate(M[x]):
             # Si la flèche existe, on l'ajoute à la liste finale
@@ -220,12 +217,3 @@ def obtenir_liste(M, L):
     
     # On renvoit la liste finale
     return liste
-
-M = np.array([
-    [float('inf'), 1, 1, float('inf')],
-    [1, float('inf'), float('inf'), 1],
-    [float('inf'), float('inf'), float('inf'), float('inf')],
-    [float('inf'), 1, float('inf'), float('inf')]
-])
-
-bellman_ford(M, 0)

@@ -1,8 +1,7 @@
 import graphviz as gv
 import numpy as np
 
-import bellman_ford as bel
-import dijkstra as dij
+import algo as al
 import graphes as g
 
 #Création d'une variable i pour simplifier l'écriture de l'inifinie dans la matrice
@@ -18,7 +17,7 @@ i = float('inf')
 #     [i, i, i, i, i],
 #     [1, -1, 1, i, 1]])
 
-M = g.graphe2(10, 0.8, -5, 5)
+M = g.graphe2(5, 0.8, -5, 5)
 
 def matrix_to_graph(M,d,s) :
     #On initialise la création d'un dot qui permettra de stocker les informations de notre graphe
@@ -39,10 +38,10 @@ def matrix_to_graph(M,d,s) :
     
     #Si algo est encore True on va utiliser dijkstra car il n'y a pas d'arête à poid négatif
     if algo == True : 
-        c = dij.dijkstra(M,d)[s]
+        c = al.dijkstra(M,d)[s]
     #Sinon on utilise Bellman-Ford
     else :
-        c = bel.bellman_ford(M,d)[s]
+        c = al.bellman_ford(M,d)[s]
     
     #On initialise une liste d'arête parcourue pour ne pas ajouter deux fois dans dot
     c_parcourus = set()
