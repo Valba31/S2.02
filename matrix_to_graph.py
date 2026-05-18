@@ -8,8 +8,7 @@ import graphes as g
 INF = float('inf')
 
 # Création de la matrice
-M = g.graphe2(10, 0.6, -5, 5)
-
+M = g.graphe2(10, 0.6, -1, 10)
 
 def matrix_to_graph(M, d, s):
     n = len(M)
@@ -38,7 +37,7 @@ def matrix_to_graph(M, d, s):
     except Exception as e:
         print("Erreur lors du calcul du chemin :", e)
         return dot_vide
-
+    
     # Vérification du chemin
     if c is None or len(c) == 0:
         print("Chemin impossible")

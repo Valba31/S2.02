@@ -118,11 +118,13 @@ def bellman_ford(M, d):
 
     # Liste des arêtes
     F = obtenir_liste(M, ps.pp(M, d))
-
+    
     # ALGO
-    # On répète au maximum n-1 fois : c'est le nombre de sommets du graphe moins 1, car un chemin simple ne peut pas faire plus de n-1 arêtes
-    for _ in range(n - 1):
-
+    # Compteur qui nous permetra de savoir si on a un cycle négatif
+    i = 0
+    
+    # On répète au maximum n fois :
+    for _ in range(n):        
         # Indicateur de changement : s'il n'y a pas de changement dans un tour de boucle, on peut arrêter l'algorithme
         modification = False
 
@@ -147,21 +149,17 @@ def bellman_ford(M, d):
                     # On indique qu'il y a eu une modification dans ce tour de boucle
                     modification = True
 
-        # Arrêt si plus aucun changement
+        # Arrêt et on sort de la boucle en avance si plus aucun changement
         if not modification:
             break
+            
+        i += 1
 
-    # # -------------------------
-    # # CYCLE NÉGATIF
-    # # -------------------------
-
-    # for p1, p2 in F:
-
-    #     if poids[p1] != float('inf'):
-
-    #         if poids[p1] + M[p1, p2] < poids[p2]:
-    #             print("Cycle de poids négatif détecté")
-    #             return None
+    # VERIFICATION
+    if i == n:
+        print("A")
+        print("Le graphe contient un cycle de poids négatif")
+        return None
 
     # AFFICHAGE
     # On crée un dictionnaire qui associe à chaque sommet son chemin depuis le sommet de départ, pour pouvoir tracer les graphes avec Graphviz
@@ -183,7 +181,7 @@ def bellman_ford(M, d):
         actuel = sommet
 
         # On remonte par concatenation des prédécesseurs jusqu'à arriver au sommet de départ :
-        while actuel is not None:
+        while actuel != d:
             # On ajoute le sommet actuel au chemin
             chemin.append(actuel)
             
@@ -217,3 +215,13 @@ def obtenir_liste(M, L):
     
     # On renvoit la liste finale
     return liste
+
+INF = float('inf')
+
+M = np.array([[0, 3, 1, INF, INF],
+              [3, 0, 7, 5, 1],
+                [1, 7, 0, 2, INF],
+                [INF, 5, 2, 0, 3],
+                [INF, 1, INF, 3, 0]])
+
+bellman_ford(M, 0)
