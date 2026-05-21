@@ -1,5 +1,4 @@
 import graphviz as gv
-import numpy as np
 
 import utile
 from dijkstra import dijkstra
