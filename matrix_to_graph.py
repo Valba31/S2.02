@@ -1,14 +1,12 @@
 import graphviz as gv
 import numpy as np
 
-import algo as al
-import graphes as g
+import utile
+from dijkstra import dijkstra
+from bellman_ford import bellman_ford
 
 # Création d'une variable pour représenter l'infini
 INF = float('inf')
-
-# Création de la matrice
-M = g.graphe2(10, 0.6, -1, 10)
 
 def matrix_to_graph(M, d, s):
     n = len(M)
@@ -30,9 +28,15 @@ def matrix_to_graph(M, d, s):
     # Choix de l'algorithme
     try:
         if not poids_negatif:
-            c = al.dijkstra(M, d)[s]
+            c = dijkstra(M, d)[s]
         else:
-            c = al.bellman_ford(M, d)[s]
+            c = bellman_ford(M, d)
+            
+            if (c is None):
+                print("Chemin impossible")
+                return dot_vide
+            
+            c = c[s]
 
     except Exception as e:
         print("Erreur lors du calcul du chemin :", e)
@@ -97,6 +101,9 @@ def matrix_to_graph(M, d, s):
                     )
 
     return dot
+
+# Création de la matrice
+M = utile.graphe2(10, 0.6, -1, 20)
 
 # Création du graphe
 dot = matrix_to_graph(M, 0, 3)
