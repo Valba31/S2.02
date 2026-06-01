@@ -1,32 +1,66 @@
 import numpy as np
 
+# On crée une variable pour ne pas avoir à la réécrire
 INF = float('inf')
 
+# Après avoir créé la fonction graphe2, ou pourrait directement l'appeler dans graphe avec : return graphe2(n, 0.5, a, b) pour faire un graphe aléatoire avec une probabilité de 0.5 d'avoir une flèche entre deux sommets. Mais on a préféré laissé les fonctions comme ça puisqu'on les a créé dans le bon ordre
 def graphe(n, a, b):
+    # On crée une matrice de taille n*n avec des 0 et des 1
     T = np.random.randint(0, 2, (n, n))
+    
+    # On change son type pour pouvoir y mettre des infinis
     T = T.astype('float64')
     
+    # Pour chaque coefficiant de la matrice :
     for i in range(n):
         for j in range(n):
+            
+            # Si le coefficient est différent de 0 :
             if T[i][j] != 0:
+                # On lui donne une valeur aléatoire entre a et b
                 T[i][j] = np.random.randint(a, b)
             else:
+                # Sinon, on lui donne la valeur infini
                 T[i][j] = float('inf')
 
     return T
 
 def graphe2(n, p, a, b):
+    # On crée une matrice de taille n*n avec des 0 et des 1, où la probabilité d'avoir un 1 est p
     T = np.random.binomial(1, p, (n, n))
+    
+    # On change son type pour pouvoir y mettre des infinis
     T = T.astype('float64')
     
+    # Pour chaque coefficiant de la matrice :
     for i in range(n):
         for j in range(n):
+            
+            # Si le coefficient est différent de 0 :
             if T[i][j] != 0:
+                # On lui donne une valeur aléatoire entre a et b
                 T[i][j] = np.random.randint(a, b)
             else:
+                # Sinon, on lui donne la valeur infini
                 T[i][j] = float('inf')
     
     return T
+
+def obtenir_liste_aretes(M, resultat_du_parcours):
+    # Liste finale des flèches : elle contiendra des tuples (x, y) pour chaque flèche qui part de x et qui va vers y
+    liste = []
+    
+    # Pour chaque sommet du parcours en largeur/profondeur :
+    for x in resultat_du_parcours:
+        
+        # Pour chaque flèche qui part de ce sommet :
+        for k, v in enumerate(M[x]):
+            # Si la flèche existe, on l'ajoute à la liste finale
+            if v != float('inf'):
+                liste.append((x, k))
+    
+    # On renvoit la liste finale
+    return liste
 
 def pp(M, d):
     n = len(M)       # taille du tableau = nombre de sommets
@@ -66,19 +100,3 @@ def pl(M, d):
                 Parcours.append(j) # On les place dans la liste Resultat
         file.pop(0) # on défile i (on retire le premier élément)
     return(Parcours)
-
-def obtenir_liste_aretes(M, resultat_du_parcours):
-    # Liste finale des flèches : elle contiendra des tuples (x, y) pour chaque flèche qui part de x et qui va vers y
-    liste = []
-    
-    # Pour chaque sommet du parcours en largeur/profondeur :
-    for x in resultat_du_parcours:
-        
-        # Pour chaque flèche qui part de ce sommet :
-        for k, v in enumerate(M[x]):
-            # Si la flèche existe, on l'ajoute à la liste finale
-            if v != float('inf'):
-                liste.append((x, k))
-    
-    # On renvoit la liste finale
-    return liste
