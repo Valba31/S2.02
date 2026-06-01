@@ -9,17 +9,17 @@ INF = float('inf')
 
 def matrix_to_graph(M, d, s):
     n = len(M)
-
+    
     dot = gv.Digraph(strict=True)
     dot_vide = gv.Digraph(strict=True)
 
-    # Création du graphe sans chemin
+    # Création d'un graphe dans le cas ou il n'y a pas de chemin
     for i in range(n):
         for j in range(n):
             if M[i][j] != INF:
                 dot_vide.edge(str(i), str(j), label=str(M[i][j]))
 
-    # Vérification de la présence d'une arête de poids négatif
+    # On vérifie la présence d'arête à poid négatif
     poids_negatif = False
     for i in range(n):
         for j in range(n):
@@ -27,58 +27,58 @@ def matrix_to_graph(M, d, s):
                 poids_negatif = True
                 break
 
-    # Utilisation de l'algorithme adapté à notre situation
+    # On fait le calcul du chemin avec l'algorithme adaptée
     if not poids_negatif:
         resultat = dijkstra(M, d)
     else:
         resultat = bellman_ford(M, d)
 
-    # Si cycle négatif alors on renvoie le graphe sans chemin
+    # On renvoie le graphe sans chemin si il y a un cycle négatif
     if resultat is None:
         print("Cycle négatif détecté, chemin impossible")
         return dot_vide
 
-    # Récupération de la liste des sommet pour aller de d à s
+    #Si il n'y a pas ce cycle négatif on récupère le chemin
     c = resultat[s]
 
-    #Si il n'y a pas de chemin alors on renvoie le graphe sans chemin
+    #Si le chemin est nul, on renvoie le graphe sans chemin
     if c is None or len(c) == 0:
         print("Chemin impossible")
         return dot_vide
 
     print("Chemin trouvé :", c)
 
-    # Si il y a un chemin on fait une liste d'arêtes parcourues
+    # Si on a un chemin, on va stocker l'ensemble des arêtes parcourues
     aretes_parcourues = set()
 
-    # On définit les noeuds que l'on va parcourir en rouge
+    # On définit les noeuds en rouge
     dot.attr('node', color='red', fontcolor='red')
 
-    # On parcours la liste des sommet du chemin
+    # On parcours le chemin
     for i in range(len(c) - 1):
         sommet1 = c[i]
         sommet2 = c[i + 1]
 
-        # On ajoute le noeuds en rouge
+        # On ajoute les noeuds que l'on rencontre
         dot.node(str(sommet1))
 
-
-        # Si il y a un chemin qui n'est pas infini entre les deux noeuds, on ajoute l'arêtes en rouge 
+        # On ajoute l'arête en rouge si elle se se trouve bien dans la matrice
         if M[sommet1][sommet2] != INF:
             dot.edge(
                 str(sommet1), str(sommet2),
                 label=str(M[sommet1][sommet2]),
                 color='red', fontcolor='red'
             )
+            # On l'ajoute à la liste des arêtes parcourues
             aretes_parcourues.add((sommet1, sommet2))
 
-    # On ajoute le dernier sommet du chemin c
+    # On ajoute le denier noeuds du chemin
     dot.node(str(c[-1]))
 
-    # Modification des prochaines arêtes en noir
+    # On redéfinit la suite pour avoir des noeuds en noirs
     dot.attr('node', color='black', fontcolor='black')
 
-    # Ajout des arêtes qui ne sont pas dans le chemin en noir
+    # On ajoute le reste des noeuds et arêtes
     for i in range(n):
         for j in range(n):
             if M[i][j] != INF and (i, j) not in aretes_parcourues:
@@ -87,11 +87,7 @@ def matrix_to_graph(M, d, s):
     return dot
 
 # Création de la matrice
-<<<<<<< Updated upstream
-M = utile.graphe2(4, 0.6, -1, 20)
-=======
-M = utile.graphe2(10, 0.2, -1, 20)
->>>>>>> Stashed changes
+M = utile.graphe2(8, 0.2, -1, 20)
 
 # Création du graphe
 dot = matrix_to_graph(M, 0, 3)
