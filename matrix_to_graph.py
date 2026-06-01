@@ -102,7 +102,7 @@ def matrix_to_graph(M, d, s):
     return dot
 
 # Création de la matrice
-M = utile.graphe2(10, 0.6, -1, 20)
+M = utile.graphe2(4, 0.6, -1, 20)
 
 # Création du graphe
 dot = matrix_to_graph(M, 0, 3)

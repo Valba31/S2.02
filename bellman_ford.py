@@ -1,6 +1,6 @@
 from random import randint
 
-from utile import pl, pp, obtenir_liste_aretes
+from utile import graphe2, pl, pp, obtenir_liste_aretes
 
 INF = float('inf')
 
@@ -72,6 +72,9 @@ def bellman_ford(M, d):
     if compteur == n:
         print("Il existe un cycle de poids négatif dans le graphe")
         return None
+    
+    # Afficher le compteur (utile pour les questions de la partie 5, à commenter sinon)
+    print(f"Nombre de tours de boucle pour BF NORMAL : {compteur}")
     
     # AFFICHAGE
     # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
@@ -178,6 +181,9 @@ def bellman_ford_pl(M, d):
         print("Il existe un cycle de poids négatif dans le graphe")
         return None
     
+    # Afficher le compteur (utile pour les questions de la partie 5, à commenter sinon)
+    print(f"Nombre de tours de boucle pour BF PL : {compteur}")
+    
     # AFFICHAGE
     # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
     dictionnaire_des_chemins = {i: None for i in range(n)}
@@ -283,6 +289,9 @@ def bellman_ford_pp(M, d):
         print("Il existe un cycle de poids négatif dans le graphe")
         return None
     
+    # Afficher le compteur (utile pour les questions de la partie 5, à commenter sinon)
+    print(f"Nombre de tours de boucle pour BF PP : {compteur}")
+    
     # AFFICHAGE
     # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
     dictionnaire_des_chemins = {i: None for i in range(n)}
@@ -326,3 +335,17 @@ def bellman_ford_pp(M, d):
             dictionnaire_des_chemins[k] = chemin
 
     return dictionnaire_des_chemins
+
+
+if __name__ == "__main__":
+    # TESTS DE LA PARTIE 5
+
+    for i in range(10):
+        print(f"Test {i + 1} :")
+        M = graphe2(50, 0.8, 0, 20)
+        d = randint(0, 9)
+        print(f"Sommet de départ : {d}")
+        bellman_ford(M, d)
+        bellman_ford_pl(M, d)
+        bellman_ford_pp(M, d)
+        print("-" * 50)
