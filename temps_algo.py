@@ -1,11 +1,14 @@
 import time
 import numpy as np
-import graphes as g
+import matplotlib.pyplot as plt
+import utile as u
+
+INF = float('inf')
 
 def TempsDij(n) :
     start_time = time.time()
     
-    M = g.graphe2(n, 0.5, 0, 10)
+    M = u.graphe2(n, 0.5, 0, 10)
     
     # Dictionnaire des distances minimales :
     # au départ, toutes les distances valent +inf
@@ -63,13 +66,100 @@ def TempsDij(n) :
                 
                 # On mémorise le sommet précédent dans le plus court chemin 
                 precedents[j] = cle 
-                
-    # AFFICHAGE
-    # On utilise un dictionnaire pour lier les chemins à un sommet, ça nous sera utile pour le tracer des graphes avec Graphviz
-    dictionnaire_des_chemins = {i: None for i in range(n)}
     
     end_time = time.time()
     elapsed_time = end_time - start_time
     return (elapsed_time)
 
-print(TempsDij(10))
+def TempsBF(n) :
+    
+    start_time = time.time()
+    
+    M = u.graphe2(n, 0.5, 0, 10)
+    
+    # INITIALISATION
+    # n correspond au nombre de sommets du graphe (car la matrice est carrée n * n)
+    n = len(M)
+    
+    # Dictionnaire des distances minimales :
+    # au départ, toutes les distances valent +inf
+    poids = {i: INF for i in range(n)}
+    
+    # La distance du sommet de départ à lui-même vaut 0
+    poids[0] = 0
+    
+    # Dictionnaire des prédécesseurs, qui permettra de reconstruire le plus court chemin
+    precedents = {i: None for i in range(n)}
+    
+    # Liste des arêtes du graphe :
+    F = u.obtenir_liste_aretes(M, u.pp(M, 0))
+    
+    # ALGO
+    # Compteur qui nous permettra de savoir s'il y a un cycle négatif
+    compteur = 0
+    
+    # On répète au maximum n fois :
+    for _ in range(n):
+        
+        # Indicateur de changement : s'il n'y a pas de changement dans un tour de boucle, on peut arrêter l'algorithme
+        modification = False
+        
+        # Pour chaque arête du graphe :
+        for p1, p2 in F:
+            
+            # Si le poids de l'arête (p1, p2) est égal à +inf, il n'existe pas d'arête entre p1 et p2 : on passe à la suivante
+            if M[p1, p2] == INF: continue
+            
+            # Nouvelle distance possible :
+            # distance jusqu'à "p1" + poids de l'arête (p1 -> p2)
+            nouvelle_distance = poids[p1] + M[p1, p2]
+            
+            # Si cette nouvelle distance est meilleure que celle connue actuellement, on met à jour 
+            if poids[p2] > nouvelle_distance: 
+                # Mise à jour de la meilleure distance 
+                poids[p2] = nouvelle_distance
+                
+                # Mise à jour du prédécesseur
+                precedents[p2] = p1
+                
+                # Indication de changement pour le prochain tour de boucle
+                modification = True
+        
+        # On incrémente le compteur à chaque tour de boucle
+        compteur += 1
+        
+        # Arrêt et on sort de la boucle en avance si plus aucun changement
+        if modification == False:
+            break
+    
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    return (elapsed_time)
+    
+
+print("Temps d'execution de Dijktsra :", TempsDij(200))
+print("Temps d'execution de Bellman-Ford :", TempsBF(200))
+
+def comp_dij_bf() :
+    tailles = list(range(2,400))
+    temps_dij = []
+    temps_bf = []
+    
+    for n in tailles :
+        temps_dij.append(TempsDij(n))
+        temps_bf.append(TempsBF(n))
+        print(n)
+        
+    plt.figure(figsize = (10, 6))
+    plt.plot(tailles, temps_dij, label = "Dijkstra", color = "red")
+    plt.plot(tailles, temps_bf, label = "Bellman-Ford", color = "blue")
+    
+    plt.title("Evolution des temps d'éxécution de l'algorithme de Dijkstra et de Bellman-Ford")
+    plt.xlabel("Nombre de sommet du graphe (N)")
+    plt.ylabel("Temps d'exécution (s)")
+    
+    plt.legend()
+    plt.grid(True, linestyle = '--', alpha = 0.5)
+    plt.show()
+
+comp_dij_bf()
