@@ -75,7 +75,7 @@ def TempsBF(n) :
     
     start_time = time.time()
     
-    M = u.graphe2(n, 0.5, 0, 10)
+    M = u.graphe2(n, 0.5, -10, 10)
     
     # INITIALISATION
     # n correspond au nombre de sommets du graphe (car la matrice est carrée n * n)
@@ -135,13 +135,10 @@ def TempsBF(n) :
     end_time = time.time()
     elapsed_time = end_time - start_time
     return (elapsed_time)
-    
 
-print("Temps d'execution de Dijktsra :", TempsDij(200))
-print("Temps d'execution de Bellman-Ford :", TempsBF(200))
 
 def comp_dij_bf() :
-    tailles = list(range(2,400))
+    tailles = list(range(2,200))
     temps_dij = []
     temps_bf = []
     
@@ -162,4 +159,26 @@ def comp_dij_bf() :
     plt.grid(True, linestyle = '--', alpha = 0.5)
     plt.show()
 
-comp_dij_bf()
+def comp_dij_bf_log() :
+    tailles = list(range(2,200))
+    temps_dij = []
+    temps_bf = []
+    
+    for n in tailles :
+        temps_dij.append(TempsDij(n))
+        temps_bf.append(TempsBF(n))
+        print(n)
+        
+    plt.figure(figsize = (10, 6))
+    plt.loglog(tailles, temps_dij, label = "Dijkstra", color = "red")
+    plt.loglog(tailles, temps_bf, label = "Bellman-Ford", color = "blue")
+    
+    plt.title("Evolution des temps d'éxécution de l'algorithme de Dijkstra et de Bellman-Ford")
+    plt.xlabel("Nombre de sommet du graphe (N)")
+    plt.ylabel("Temps d'exécution (s)")
+    
+    plt.legend()
+    plt.grid(True, linestyle = '--', alpha = 0.5, which = "both")
+    plt.show()
+   
+comp_dij_bf_log()
